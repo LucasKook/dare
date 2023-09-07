@@ -192,6 +192,7 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
       scores <- (cleft * sc_left + exact * sc_exact + cright * sc_right + cint * sc_int)
       pen <- xi * tf$linalg$matmul(prm, scores)^2
 
+      # return(pen) # test xi = Inf
       return(layer_add(list(neglogLik, pen)))
     }
   )
