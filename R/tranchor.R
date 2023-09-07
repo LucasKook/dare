@@ -1,4 +1,7 @@
 
+#' Distributional anchor regression models
+#'
+#' @export
 tranchor <- function(
     formula,
     data,
@@ -176,7 +179,7 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
       ll_right <- tf$math$log(tf$clip_by_value(1 - tfd_cdf(bd, trafo_lwr), 1e-16, 1))
       ll_int <- tf$math$log(tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1))
 
-      neglogLik <- - (cleft * ll_left + exact * ll_exact + cright * ll_right + cint * ll_int)
+      neglogLik <- - k_mean(cleft * ll_left + exact * ll_exact + cright * ll_right + cint * ll_int)
 
       tape <- \() NULL
       with(tf$GradientTape() %as% tape, {
@@ -192,7 +195,7 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
         tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1)
 
       scores <- (cleft * sc_left + exact * sc_exact + cright * sc_right + cint * sc_int)
-      pen <- xi * tf$linalg$matmul(prm, scores)^2
+      pen <- xi * k_mean(tf$linalg$matmul(prm, scores)^2)
 
       # return(pen) # test xi = Inf
       return(layer_add(list(neglogLik, pen)))
@@ -227,5 +230,74 @@ logLik.tranchor <- function(
 
   nll <- nll(object$init_params$latent_distr)
   convert_fun(nll(y, y_pred)$numpy())
+
+}
+
+.get_resid_fun <- function(base_distribution) {
+
+  if (is.character(base_distribution)) {
+    bd <- deeptrafo:::get_bd(base_distribution)
+  } else {
+    bd <- base_distribution
+  }
+
+  return(
+    function(y_true, y_pred) {
+
+      cleft <- tf_stride_cols(y_true, 1L)
+      exact <- tf_stride_cols(y_true, 2L)
+      cright <- tf_stride_cols(y_true, 3L)
+      cint <- tf_stride_cols(y_true, 4L)
+
+      trafo <- layer_add(list(tf_stride_cols(y_pred, 1L), # Shift in 1
+                              tf_stride_cols(y_pred, 2L))) # Upper in 2
+      trafo_lwr <- layer_add(list(tf_stride_cols(y_pred, 1L),
+                                  tf_stride_cols(y_pred, 3L))) # Lower in 3
+
+      tape <- \() NULL
+      with(tf$GradientTape() %as% tape, {
+        tape$watch(trafo)
+        dd2d <- tfd_prob(bd, trafo)
+      })
+      dd <- tape$gradient(dd2d, trafo)
+
+      sc_exact <- dd / tf$clip_by_value(tfd_prob(bd, trafo), 1e-6, 20)
+      sc_left <- tfd_prob(bd, trafo) / tf$clip_by_value(tfd_cdf(bd, trafo), 1e-6, 1)
+      sc_right <- - tfd_prob(bd, trafo_lwr) / tf$clip_by_value(1 - tfd_cdf(bd, trafo_lwr), 1e-6, 1)
+      sc_int <- (tfd_prob(bd, trafo) - tfd_prob(bd, trafo_lwr)) /
+        tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1)
+
+      return(cleft * sc_left + exact * sc_exact + cright * sc_right + cint * sc_int)
+    }
+  )
+}
+
+#' @exportS3Method residuals tranchor
+residuals.tranchor <- function(
+    object,
+    newdata = NULL,
+    convert_fun = function(x, ...) - identity(x),
+    ...
+)
+{
+
+  if (object$init_params$is_atm && !is.null(newdata)) {
+    lags <- fm_to_lag(object$init_params$lag_formula)
+    newdata <- create_lags(rvar = object$init_params$response_varname,
+                           d_list = newdata,
+                           lags = lags)$data
+  }
+
+  if (is.null(newdata)) {
+    y <- object$init_params$y
+    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE, ... = ...)
+  } else {
+    y <- response(newdata[[object$init_params$response_varname]])
+    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE,
+                               newdata = newdata, ... = ...)
+  }
+
+  res <- .get_resid_fun(object$init_params$latent_distr)
+  convert_fun(res(y, y_pred)$numpy())
 
 }
