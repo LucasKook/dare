@@ -25,7 +25,7 @@ test_that("main works", {
     fit(m, epochs = 1e3, batch_size = tn, validation_split = 0)
 
     logLik(tm)
-    logLik(m)
+    logLik.tranchor(m)
 
     unlist(coef(m))
     coef(tm)

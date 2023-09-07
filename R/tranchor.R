@@ -137,12 +137,14 @@ tranchor <- function(
   ret$init_params$response <- resp
   ret$init_params$prepare_y_valdata <- response
   ret$init_params$data <- if (return_data) data else NULL
+  ret$init_params$latent_distr <- latent_distr
   ret$init_params$call <- call
 
-  class(ret) <- c("deeptrafo", "deepregression")
+  class(ret) <- c("tranchor", "deeptrafo", "deepregression")
   ret
 
 }
+
 tranchor_loss <- function(base_distribution, prm, xi = 0) {
 
   if (is.character(base_distribution)) {
@@ -198,3 +200,32 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
   )
 }
 
+#' @exportS3Method logLik tranchor
+logLik.tranchor <- function(
+    object,
+    newdata = NULL,
+    convert_fun = function(x, ...) - sum(x, ...),
+    ...
+)
+{
+
+  if (object$init_params$is_atm && !is.null(newdata)) {
+    lags <- fm_to_lag(object$init_params$lag_formula)
+    newdata <- create_lags(rvar = object$init_params$response_varname,
+                           d_list = newdata,
+                           lags = lags)$data
+  }
+
+  if (is.null(newdata)) {
+    y <- object$init_params$y
+    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE, ... = ...)
+  } else {
+    y <- response(newdata[[object$init_params$response_varname]])
+    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE,
+                               newdata = newdata, ... = ...)
+  }
+
+  nll <- nll(object$init_params$latent_distr)
+  convert_fun(nll(y, y_pred)$numpy())
+
+}

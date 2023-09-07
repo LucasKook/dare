@@ -18,7 +18,7 @@ ColrAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("ColrNN", class(ret))
+  class(ret) <- c("ColrAN", class(ret))
 
   ret
 
@@ -43,7 +43,7 @@ CoxphAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("CoxphNN", class(ret))
+  class(ret) <- c("CoxphAN", class(ret))
 
   ret
 
@@ -68,7 +68,7 @@ LehmanAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("LehmanNN", class(ret))
+  class(ret) <- c("LehmanAN", class(ret))
 
   ret
 
@@ -93,7 +93,7 @@ BoxCoxAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("BoxCoxNN", class(ret))
+  class(ret) <- c("BoxCoxAN", class(ret))
 
   ret
 
@@ -118,7 +118,7 @@ PolrAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("PolrNN", class(ret))
+  class(ret) <- c("PolrAN", class(ret))
 
   ret
 
@@ -148,7 +148,7 @@ LmAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("LmNN", class(ret))
+  class(ret) <- c("LmAN", class(ret))
 
   ret
 
@@ -192,7 +192,7 @@ SurvregAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("SurvregNN", class(ret))
+  class(ret) <- c("SurvregAN", class(ret))
 
   ret
 
@@ -225,7 +225,7 @@ cotramAN <- function(
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
 
-  class(ret) <- c("cotramNN", class(ret))
+  class(ret) <- c("cotramAN", class(ret))
 
   ret
 
