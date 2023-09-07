@@ -1,0 +1,15 @@
+Package: tranchor
+Type: Package
+Title: Transformation model anchor regression
+Version: 0.1.0
+Authors@R: person("Lucas", "Kook", email = "lucasheinrich.kook@gmail.com", role = "cre")
+Description: Distributional anchor regression using linear shift transformation
+    models as described in Kook et al. (2022, <doi:10.1007/s11222-022-10097-z>).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.0.0), deeptrafo
+RoxygenNote: 7.1.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
