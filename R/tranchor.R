@@ -5,7 +5,7 @@
 tranchor <- function(
     formula,
     data,
-    prm,
+    anchor,
     xi = 0,
     response_type = get_response_type(data[[all.vars(fml)[1]]]),
     order = get_order(response_type, data[[all.vars(fml)[1]]]),
@@ -20,6 +20,9 @@ tranchor <- function(
 {
 
   call <- match.call()
+
+  Amat <- model.matrix(anchor, data)
+  prm <- Amat %*% solve(t(Amat) %*% Amat) %*% t(Amat)
 
   # How many terms are in the formula
   fml <- as.Formula(formula)

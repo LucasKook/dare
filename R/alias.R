@@ -1,7 +1,7 @@
 
 ColrAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
@@ -12,13 +12,11 @@ ColrAN <- function(
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("ColrAN", class(ret))
 
   ret
 
@@ -26,7 +24,7 @@ ColrAN <- function(
 
 CoxphAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
@@ -37,13 +35,11 @@ CoxphAN <- function(
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("CoxphAN", class(ret))
 
   ret
 
@@ -51,7 +47,7 @@ CoxphAN <- function(
 
 LehmanAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gumbel", monitor_metrics = NULL,
@@ -62,13 +58,11 @@ LehmanAN <- function(
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("LehmanAN", class(ret))
 
   ret
 
@@ -76,7 +70,7 @@ LehmanAN <- function(
 
 BoxCoxAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
@@ -87,13 +81,11 @@ BoxCoxAN <- function(
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("BoxCoxAN", class(ret))
 
   ret
 
@@ -101,7 +93,7 @@ BoxCoxAN <- function(
 
 PolrAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
@@ -112,13 +104,11 @@ PolrAN <- function(
   stopifnot(response_type == "ordered")
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("PolrAN", class(ret))
 
   ret
 
@@ -126,7 +116,7 @@ PolrAN <- function(
 
 LmAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
@@ -142,13 +132,11 @@ LmAN <- function(
   stopifnot(response_type == "continuous")
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("LmAN", class(ret))
 
   ret
 
@@ -156,7 +144,7 @@ LmAN <- function(
 
 SurvregAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
@@ -186,13 +174,11 @@ SurvregAN <- function(
   )
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("SurvregAN", class(ret))
 
   ret
 
@@ -200,7 +186,7 @@ SurvregAN <- function(
 
 cotramAN <- function(
     formula, data,
-    prm, xi = 0,
+    anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
@@ -219,13 +205,11 @@ cotramAN <- function(
   )
 
   ret <- tranchor(formula = formula, data = data,
-                  prm = prm, xi = xi,
+                  anchor = anchor, xi = xi,
                   response_type = response_type, order = order,
                   addconst_interaction = addconst_interaction, latent_distr = latent_distr,
                   monitor_metrics = monitor_metrics, trafo_options = trafo_options,
                   ... = ...)
-
-  class(ret) <- c("cotramAN", class(ret))
 
   ret
 
