@@ -48,7 +48,7 @@ CoxphAN <- function(
 }
 
 #' @export
-LehmanAN <- function(
+LehmannAN <- function(
     formula, data,
     anchor, xi = 0,
     response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
