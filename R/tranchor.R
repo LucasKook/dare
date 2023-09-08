@@ -27,7 +27,8 @@ tranchor <- function(
   call <- match.call()
 
   Amat <- stats::model.matrix(anchor, data)
-  prm <- Amat %*% solve(t(Amat) %*% Amat) %*% t(Amat)
+  Q <- qr.Q(qr(Amat))
+  prm <- tcrossprod(Q)
 
   # How many terms are in the formula
   fml <- Formula::as.Formula(formula)
