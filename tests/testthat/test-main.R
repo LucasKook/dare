@@ -24,11 +24,11 @@ test_that("main works", {
                         unlist(coef(m)[-2])),
           tram = coef(tm, with_baseline = TRUE))
 
-    plot(residuals.tranchor(m), residuals(tm), col = cut(d$A, breaks = quantile(d$A)))
-    plot(residuals.tranchor(m) ~ A, data = d)
-    abline(lm(residuals.tranchor(m) ~ A, data = d))
-    plot(residuals(tm) ~ d$A)
-    abline(lm(residuals(tm) ~ A, data = d))
+    # plot(residuals.tranchor(m), residuals(tm), col = cut(d$A, breaks = quantile(d$A)))
+    # plot(residuals.tranchor(m) ~ A, data = d)
+    # abline(lm(residuals.tranchor(m) ~ A, data = d))
+    # plot(residuals(tm) ~ d$A)
+    # abline(lm(residuals(tm) ~ A, data = d))
   })
 })
 
@@ -53,8 +53,8 @@ test_that("alias works", {
     unlist(coef(m))
     coef(tm)
 
-    plot(residuals.tranchor(m), residuals(tm), col = cut(d$A, breaks = quantile(d$A)))
-    plot(residuals.tranchor(m) ~ A, data = d)
-    abline(lm(residuals.tranchor(m) ~ A, data = d))
+    # plot(residuals.tranchor(m), residuals(tm), col = cut(d$A, breaks = quantile(d$A)))
+    # plot(residuals.tranchor(m) ~ A, data = d)
+    # abline(lm(residuals.tranchor(m) ~ A, data = d))
   })
 })
