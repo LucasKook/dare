@@ -179,7 +179,7 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
       ll_right <- tf$math$log(tf$clip_by_value(1 - tfd_cdf(bd, trafo_lwr), 1e-16, 1))
       ll_int <- tf$math$log(tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1))
 
-      neglogLik <- - k_mean(cleft * ll_left + exact * ll_exact + cright * ll_right + cint * ll_int)
+      neglogLik <- - (cleft * ll_left + exact * ll_exact + cright * ll_right + cint * ll_int)
 
       tape <- \() NULL
       with(tf$GradientTape() %as% tape, {
@@ -188,17 +188,17 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
       })
       dd <- tape$gradient(dd2d, trafo)
 
-      sc_exact <- dd / tf$clip_by_value(tfd_prob(bd, trafo), 1e-6, 20)
+      sc_exact <- dd / tf$clip_by_value(tfd_prob(bd, trafo), 1e-6, Inf)
       sc_left <- tfd_prob(bd, trafo) / tf$clip_by_value(tfd_cdf(bd, trafo), 1e-6, 1)
       sc_right <- - tfd_prob(bd, trafo_lwr) / tf$clip_by_value(1 - tfd_cdf(bd, trafo_lwr), 1e-6, 1)
       sc_int <- (tfd_prob(bd, trafo) - tfd_prob(bd, trafo_lwr)) /
         tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1)
 
       scores <- (cleft * sc_left + exact * sc_exact + cright * sc_right + cint * sc_int)
-      pen <- xi * k_mean(tf$linalg$matmul(prm, scores)^2)
+      pen <- tf$linalg$matmul(prm, scores)^2
 
       # return(pen) # test xi = Inf
-      return(layer_add(list(neglogLik, pen)))
+      return(layer_add(list(neglogLik, xi * pen)))
     }
   )
 }
@@ -300,4 +300,18 @@ residuals.tranchor <- function(
   res <- .get_resid_fun(object$init_params$latent_distr)
   convert_fun(res(y, y_pred)$numpy())
 
+}
+
+#' @exportS3Method fit tranchor
+fit.tranchor <- function(
+    object,
+    epochs = 10,
+    early_stopping_metric = "loss",
+    callbacks = list(),
+    ...
+){
+  fit.deepregression(object, epochs = epochs, batch_size = nrow(object$init_params$y),
+                     shuffle = FALSE, early_stopping_metric = early_stopping_metric,
+                     callbacks = callbacks, validation_data = NULL, validation_split = 0,
+                     ...)
 }
