@@ -1,6 +1,5 @@
 
 devtools::load_all()
-devtools::load_all("~/Dropbox/phd/projects/deeptrafo")
 
 test_that("main works", {
   expect_no_error({

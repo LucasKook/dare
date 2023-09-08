@@ -1,9 +1,10 @@
 
+#' @export
 ColrAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -22,11 +23,12 @@ ColrAN <- function(
 
 }
 
+#' @export
 CoxphAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -45,11 +47,12 @@ CoxphAN <- function(
 
 }
 
+#' @export
 LehmanAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gumbel", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -68,11 +71,12 @@ LehmanAN <- function(
 
 }
 
+#' @export
 BoxCoxAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -91,11 +95,12 @@ BoxCoxAN <- function(
 
 }
 
+#' @export
 PolrAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -114,11 +119,12 @@ PolrAN <- function(
 
 }
 
+#' @export
 LmAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = 1L,
                                   response_type = response_type,
@@ -142,11 +148,12 @@ LmAN <- function(
 
 }
 
+#' @export
 SurvregAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
     trafo_options = NULL,
     ...
@@ -184,11 +191,12 @@ SurvregAN <- function(
 
 }
 
+#' @export
 cotramAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = get_response_type(data[[all.vars(formula)[1]]]),
-    order = get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
+    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     ...
 ) {

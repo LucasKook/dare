@@ -9,6 +9,16 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0), deeptrafo
+Imports:
+    mlt,
+    variables,
+    stats,
+    purrr,
+    Formula,
+    reticulate,
+    keras,
+    deepregression,
+    survival
 RoxygenNote: 7.1.2
 Suggests: 
     testthat (>= 3.0.0)

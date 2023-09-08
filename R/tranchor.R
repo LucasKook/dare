@@ -1,6 +1,11 @@
 
 #' Distributional anchor regression models
 #'
+#' @importFrom mlt R
+#' @importFrom Formula as.Formula
+#' @importFrom stats model.matrix model.response model.frame dbeta as.formula
+#'     fitted formula predict rmultinom logLik terms drop.terms
+#' @importFrom keras layer_dense layer_add layer_concatenate
 #' @export
 tranchor <- function(
     formula,
@@ -21,11 +26,11 @@ tranchor <- function(
 
   call <- match.call()
 
-  Amat <- model.matrix(anchor, data)
+  Amat <- stats::model.matrix(anchor, data)
   prm <- Amat %*% solve(t(Amat) %*% Amat) %*% t(Amat)
 
   # How many terms are in the formula
-  fml <- as.Formula(formula)
+  fml <- Formula::as.Formula(formula)
   ninteracting <- length(attr(fml, "lhs"))
   nterms <- length(attr(fml, "rhs"))
 
@@ -40,7 +45,7 @@ tranchor <- function(
     interacting <- formula(fml, lhs = 2L, rhs = 0L)[[2]]
     h1_form <- paste0(
       "~ 0 + ", paste(paste0("ia(", c(int, trimws(
-        strsplit(form2text(interacting), "+", fixed = TRUE)[[1]]
+        strsplit(deepregression::form2text(interacting), "+", fixed = TRUE)[[1]]
       )), ")"), collapse=" + ")
     )
   } else {
@@ -63,7 +68,7 @@ tranchor <- function(
 
   # Extract response variable
   resp <- data[[rvar]]
-  y <- response(resp)
+  y <- deeptrafo:::response(resp)
 
   # check for ATMs
   ftms <- attr(tms <- terms(list_of_formulas$h2), "term.labels")
@@ -73,30 +78,30 @@ tranchor <- function(
     # extract from lag formula the variables as simple sum and
     # layers for additional transformation
     tlag_formula <- paste0(grep("atplag", ftms, value = TRUE), collapse = "+")
-    lags <- create_lags(rvar = rvar, d_list = data, atplags = tlag_formula)
+    lags <- deeptrafo:::create_lags(rvar = rvar, d_list = data, atplags = tlag_formula)
     data <- lags$data
 
     resp <- data[[rvar]] # creating lags reduces data set size
-    y <- response(resp)
+    y <- deeptrafo:::response(resp)
 
     tlag_formula <- lags$fm
     list_of_formulas$yterms <- as.formula(
-      paste0(form2text(list_of_formulas$yterms), " + ", tlag_formula))
+      paste0(deepregression::form2text(list_of_formulas$yterms), " + ", tlag_formula))
     if (length(ftms) > length(which(atps)))
-      list_of_formulas$h2 <- drop.terms(tms, which(atps))
+      list_of_formulas$h2 <- stats::drop.terms(tms, which(atps))
     else
       list_of_formulas$h2 <- ~1
   }
 
   # define how to get a trafo model from predictor
-  from_pred_to_trafo_fun <- from_preds_to_trafo(
+  from_pred_to_trafo_fun <- deeptrafo:::from_preds_to_trafo(
     atm_toplayer = trafo_options$atm_toplayer, const_ia = addconst_interaction)
 
-  atm_lag_processor <- atm_lag_processor_factory(rvar)
+  atm_lag_processor <- deeptrafo:::atm_lag_processor_factory(rvar)
 
   trafo_processor <- list(
-    bsfun = basis_processor, bsfunl = basis_processor_lower,
-    bspfun = basisprime_processor, ia = ia_processor,
+    bsfun = deeptrafo:::basis_processor, bsfunl = deeptrafo:::basis_processor_lower,
+    bspfun = deeptrafo:::basisprime_processor, ia = deeptrafo:::ia_processor,
     atplag = atm_lag_processor)
 
   dots <- list(...)
@@ -120,7 +125,7 @@ tranchor <- function(
 
   snwb <- list(subnetwork_init)[rep(1, length(list_of_formulas))]
   snwb[[which(names(list_of_formulas) == "h1pred")]] <-
-    h1_init(yterms = which(names(list_of_formulas) == "yterms"),
+    deeptrafo:::h1_init(yterms = which(names(list_of_formulas) == "yterms"),
             h1pred = which(names(list_of_formulas) == "h1pred"),
             add_const_positiv = addconst_interaction)
   snwb[[which(names(list_of_formulas) == "yterms")]] <- function(...)
@@ -141,7 +146,7 @@ tranchor <- function(
   ret$init_params$response_varname <- rvar
   ret$init_params$response_type <- response_type
   ret$init_params$response <- resp
-  ret$init_params$prepare_y_valdata <- response
+  ret$init_params$prepare_y_valdata <- deeptrafo:::response
   ret$init_params$data <- if (return_data) data else NULL
   ret$init_params$latent_distr <- latent_distr
   ret$init_params$call <- call
@@ -151,6 +156,12 @@ tranchor <- function(
 
 }
 
+#' @import deepregression
+#' @import deeptrafo
+#' @import tfprobability
+#' @import keras
+#' @import tensorflow
+#' @export
 tranchor_loss <- function(base_distribution, prm, xi = 0) {
 
   if (is.character(base_distribution)) {
@@ -159,22 +170,22 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
     bd <- base_distribution
   }
 
-  prm <- k_constant(prm)
-  xi <- k_constant(xi)
+  prm <- keras::k_constant(prm)
+  xi <- keras::k_constant(xi)
 
   return(
     function(y_true, y_pred) {
 
-      cleft <- tf_stride_cols(y_true, 1L)
-      exact <- tf_stride_cols(y_true, 2L)
-      cright <- tf_stride_cols(y_true, 3L)
-      cint <- tf_stride_cols(y_true, 4L)
+      cleft <- deepregression::tf_stride_cols(y_true, 1L)
+      exact <- deepregression::tf_stride_cols(y_true, 2L)
+      cright <- deepregression::tf_stride_cols(y_true, 3L)
+      cint <- deepregression::tf_stride_cols(y_true, 4L)
 
-      trafo <- layer_add(list(tf_stride_cols(y_pred, 1L), # Shift in 1
-                              tf_stride_cols(y_pred, 2L))) # Upper in 2
-      trafo_lwr <- layer_add(list(tf_stride_cols(y_pred, 1L),
-                                  tf_stride_cols(y_pred, 3L))) # Lower in 3
-      trafo_prime <- tf$math$log(tf$clip_by_value(tf_stride_cols(y_pred, 4L),
+      trafo <- keras::layer_add(list(deepregression::tf_stride_cols(y_pred, 1L), # Shift in 1
+                              deepregression::tf_stride_cols(y_pred, 2L))) # Upper in 2
+      trafo_lwr <- keras::layer_add(list(deepregression::tf_stride_cols(y_pred, 1L),
+                                  deepregression::tf_stride_cols(y_pred, 3L))) # Lower in 3
+      trafo_prime <- tf$math$log(tf$clip_by_value(deepregression::tf_stride_cols(y_pred, 4L),
                                                   1e-8, Inf)) # Prime in 4
 
       ll_exact <- tfd_log_prob(bd, trafo) + trafo_prime
@@ -206,115 +217,3 @@ tranchor_loss <- function(base_distribution, prm, xi = 0) {
   )
 }
 
-#' @exportS3Method logLik tranchor
-logLik.tranchor <- function(
-    object,
-    newdata = NULL,
-    convert_fun = function(x, ...) - sum(x, ...),
-    ...
-)
-{
-
-  if (object$init_params$is_atm && !is.null(newdata)) {
-    lags <- fm_to_lag(object$init_params$lag_formula)
-    newdata <- create_lags(rvar = object$init_params$response_varname,
-                           d_list = newdata,
-                           lags = lags)$data
-  }
-
-  if (is.null(newdata)) {
-    y <- object$init_params$y
-    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE, ... = ...)
-  } else {
-    y <- response(newdata[[object$init_params$response_varname]])
-    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE,
-                               newdata = newdata, ... = ...)
-  }
-
-  nll <- nll(object$init_params$latent_distr)
-  convert_fun(nll(y, y_pred)$numpy())
-
-}
-
-.get_resid_fun <- function(base_distribution) {
-
-  if (is.character(base_distribution)) {
-    bd <- deeptrafo:::get_bd(base_distribution)
-  } else {
-    bd <- base_distribution
-  }
-
-  return(
-    function(y_true, y_pred) {
-
-      cleft <- tf_stride_cols(y_true, 1L)
-      exact <- tf_stride_cols(y_true, 2L)
-      cright <- tf_stride_cols(y_true, 3L)
-      cint <- tf_stride_cols(y_true, 4L)
-
-      trafo <- layer_add(list(tf_stride_cols(y_pred, 1L), # Shift in 1
-                              tf_stride_cols(y_pred, 2L))) # Upper in 2
-      trafo_lwr <- layer_add(list(tf_stride_cols(y_pred, 1L),
-                                  tf_stride_cols(y_pred, 3L))) # Lower in 3
-
-      tape <- \() NULL
-      with(tf$GradientTape() %as% tape, {
-        tape$watch(trafo)
-        dd2d <- tfd_prob(bd, trafo)
-      })
-      dd <- tape$gradient(dd2d, trafo)
-
-      sc_exact <- dd / tf$clip_by_value(tfd_prob(bd, trafo), 1e-6, 20)
-      sc_left <- tfd_prob(bd, trafo) / tf$clip_by_value(tfd_cdf(bd, trafo), 1e-6, 1)
-      sc_right <- - tfd_prob(bd, trafo_lwr) / tf$clip_by_value(1 - tfd_cdf(bd, trafo_lwr), 1e-6, 1)
-      sc_int <- (tfd_prob(bd, trafo) - tfd_prob(bd, trafo_lwr)) /
-        tf$clip_by_value(tfd_cdf(bd, trafo) - tfd_cdf(bd, trafo_lwr), 1e-16, 1)
-
-      return(cleft * sc_left + exact * sc_exact + cright * sc_right + cint * sc_int)
-    }
-  )
-}
-
-#' @exportS3Method residuals tranchor
-residuals.tranchor <- function(
-    object,
-    newdata = NULL,
-    convert_fun = function(x, ...) - identity(x),
-    ...
-)
-{
-
-  if (object$init_params$is_atm && !is.null(newdata)) {
-    lags <- fm_to_lag(object$init_params$lag_formula)
-    newdata <- create_lags(rvar = object$init_params$response_varname,
-                           d_list = newdata,
-                           lags = lags)$data
-  }
-
-  if (is.null(newdata)) {
-    y <- object$init_params$y
-    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE, ... = ...)
-  } else {
-    y <- response(newdata[[object$init_params$response_varname]])
-    y_pred <- fitted.deeptrafo(object, call_create_lags = FALSE,
-                               newdata = newdata, ... = ...)
-  }
-
-  res <- .get_resid_fun(object$init_params$latent_distr)
-  convert_fun(res(y, y_pred)$numpy())
-
-}
-
-#' @exportS3Method fit tranchor
-fit.tranchor <- function(
-    object,
-    epochs = 10,
-    early_stopping_metric = "loss",
-    callbacks = list(),
-    ...
-){
-  fit.deepregression(object, epochs = epochs, batch_size = nrow(object$init_params$y),
-                     shuffle = FALSE, early_stopping_metric = early_stopping_metric,
-                     callbacks = callbacks, validation_data = NULL, validation_split = 0,
-                     ...)
-}
