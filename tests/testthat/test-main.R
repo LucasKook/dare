@@ -1,6 +1,4 @@
 
-devtools::load_all()
-
 test_that("main works", {
   expect_no_error({
     set.seed(1)

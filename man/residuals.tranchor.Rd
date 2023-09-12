@@ -16,9 +16,9 @@
 
 \item{newdata}{Optional data.frame or list of new data to compute residuals on}
 
-\item{convert_fun}{See \code{\link[deeptrafo]{residuals.deeptrafo}}}
+\item{convert_fun}{See \code{\link[deeptrafo]{coef.deeptrafo}}}
 
-\item{...}{See \code{\link[deeptrafo]{residuals.deeptrafo}}}
+\item{...}{See \code{\link[deeptrafo]{coef.deeptrafo}}}
 }
 \value{
 Single-column matrix of score residuals

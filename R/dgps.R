@@ -6,6 +6,8 @@
 #' @param shift shift in the anchor
 #'
 #' @return data.frame with Y, X, A
+#'
+#' @importFrom stats plogis qchisq rlogis rnorm
 #' @export
 #'
 simple_dgp <- function(n = 100, g = \(x) qchisq(plogis(x), df = 3), shift = 0) {

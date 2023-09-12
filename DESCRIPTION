@@ -2,7 +2,8 @@ Package: tranchor
 Type: Package
 Title: Transformation Model Anchor Regression
 Version: 0.1.0
-Authors@R: person("Lucas", "Kook", email = "lucasheinrich.kook@gmail.com", role = "cre")
+Authors@R: person("Lucas", "Kook", email = "lucasheinrich.kook@gmail.com", 
+    role = c("aut", "cre"))
 Description: Distributional anchor regression using linear shift transformation
     models as described in Kook et al. (2022, <doi:10.1007/s11222-022-10097-z>).
 License: GPL-3
@@ -11,14 +12,10 @@ LazyData: true
 Depends: R (>= 4.0.0), deeptrafo, tensorflow, keras, tfprobability 
 Imports:
     mlt,
-    variables,
     stats,
-    purrr,
     Formula,
-    reticulate,
-    keras,
     deepregression,
-    survival
+    tram
 RoxygenNote: 7.1.2
 Suggests: 
     testthat (>= 3.0.0)

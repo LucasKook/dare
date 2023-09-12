@@ -10,8 +10,8 @@
 ColrAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -41,8 +41,8 @@ ColrAN <- function(
 CoxphAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -72,8 +72,8 @@ CoxphAN <- function(
 LehmannAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gumbel", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -103,8 +103,8 @@ LehmannAN <- function(
 BoxCoxAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -134,8 +134,8 @@ BoxCoxAN <- function(
 PolrAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = order, response_type = response_type),
     ...
@@ -165,8 +165,8 @@ PolrAN <- function(
 LmAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = 1L,
                                   response_type = response_type,
@@ -201,8 +201,8 @@ LmAN <- function(
 SurvregAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
     trafo_options = NULL,
     ...
@@ -211,13 +211,13 @@ SurvregAN <- function(
   stopifnot(response_type %in% c("continuous", "survival"))
 
   if (response_type == "survival") {
-    ybf <- function(y) eval_loglin(y[, 1])
-    ybfl <- function(y) eval_loglin(y[, 1])
-    ybfp <- function(y) eval_loglin_prime(y[, 1])
+    ybf <- function(y) deeptrafo:::eval_loglin(y[, 1])
+    ybfl <- function(y) deeptrafo:::eval_loglin(y[, 1])
+    ybfp <- function(y) deeptrafo:::eval_loglin_prime(y[, 1])
   } else {
-    ybf <- eval_loglin
-    ybfl <- .empty_fun(ybf)
-    ybfp <- eval_loglin_prime
+    ybf <- deeptrafo:::eval_loglin
+    ybfl <- deeptrafo:::.empty_fun(ybf)
+    ybfp <- deeptrafo:::eval_loglin_prime
   }
 
   trafo_options <- trafo_control(
@@ -251,8 +251,8 @@ SurvregAN <- function(
 cotramAN <- function(
     formula, data,
     anchor, xi = 0,
-    response_type = tranchor:::get_response_type(data[[all.vars(formula)[1]]]),
-    order = tranchor:::get_order(response_type, data[[all.vars(formula)[1]]]),
+    response_type = get_response_type(data[[all.vars(formula)[1]]]),
+    order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
     ...
 ) {
@@ -263,9 +263,9 @@ cotramAN <- function(
   trafo_options <- trafo_control(
     order_bsp = order,
     response_type = response_type,
-    y_basis_fun = .get_eval_cotram(order, tsupp),
-    y_basis_fun_lower = .get_eval_cotram_lower(order, tsupp),
-    y_basis_fun_prime = .empty_fun(.get_eval_cotram(order, tsupp))
+    y_basis_fun = deeptrafo:::.get_eval_cotram(order, tsupp),
+    y_basis_fun_lower = deeptrafo:::.get_eval_cotram_lower(order, tsupp),
+    y_basis_fun_prime = deeptrafo:::.empty_fun(.get_eval_cotram(order, tsupp))
   )
 
   ret <- tranchor(formula = formula, data = data,

@@ -81,8 +81,8 @@ logLik.tranchor <- function(
 #'
 #' @param object Object of class \code{"tranchor"}
 #' @param newdata Optional data.frame or list of new data to compute residuals on
-#' @param convert_fun See \code{\link[deeptrafo]{residuals.deeptrafo}}
-#' @param ... See \code{\link[deeptrafo]{residuals.deeptrafo}}
+#' @param convert_fun See \code{\link[deeptrafo]{coef.deeptrafo}}
+#' @param ... See \code{\link[deeptrafo]{coef.deeptrafo}}
 #'
 #' @return Single-column matrix of score residuals
 #'
