@@ -116,6 +116,7 @@ please see [the `deepregression` documentation](https://github.com/neural-struct
 
 # References
 
-[1] Kook, L., Sick, B., & Bühlmann, P. (2022). Distributional anchor regression. Statistics and Computing, 32(3), 39.
+[1] Kook, L., Sick, B., & Bühlmann, P. (2022). Distributional anchor regression. Statistics and Computing, 32(3), 39. [doi:10.1007/s11222-022-10097-z](https://doi.org/10.1007/s11222-022-10097-z).
 
-[2] Rothenhäusler, D., Meinshausen, N., Bühlmann, P., & Peters, J. (2021). Anchor regression: Heterogeneous data meet causality. Journal of the Royal Statistical Society Series B: Statistical Methodology, 83(2), 215-246.
+[2] Rothenhäusler, D., Meinshausen, N., Bühlmann, P., & Peters, J. (2021). Anchor regression: Heterogeneous data meet causality. Journal of the Royal Statistical Society Series B: Statistical Methodology, 83(2), 215-246. [doi:10.1111/rssb.12398](https://doi.org/10.1111/rssb.12398).
+
