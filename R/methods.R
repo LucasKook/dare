@@ -1,5 +1,13 @@
 
+#' Log-likelihood for in- and out-of-sample model evaluation
+#'
 #' @exportS3Method logLik tranchor
+#'
+#' @param object Object of class \code{"tranchor"}
+#' @param newdata Data.frame or list for evaluating on new data.
+#' @param convert_fun See \code{\link[deeptrafo]{logLik.deeptrafo}}.
+#' @param ... See \code{\link[deeptrafo]{logLik.deeptrafo}}.
+#'
 #' @export
 logLik.tranchor <- function(
     object,
@@ -69,6 +77,15 @@ logLik.tranchor <- function(
   )
 }
 
+#' Residuals for in- and out-of-sample model evaluation
+#'
+#' @param object Object of class \code{"tranchor"}
+#' @param newdata Optional data.frame or list of new data to compute residuals on
+#' @param convert_fun See \code{\link[deeptrafo]{residuals.deeptrafo}}
+#' @param ... See \code{\link[deeptrafo]{residuals.deeptrafo}}
+#'
+#' @return Single-column matrix of score residuals
+#'
 #' @exportS3Method residuals tranchor
 #' @export
 residuals.tranchor <- function(
@@ -100,6 +117,17 @@ residuals.tranchor <- function(
 
 }
 
+#' Fit distributional anchor regression models
+#'
+#' @param object Object of class \code{"tranchor"}.
+#' @param epochs Number of epochs to train the model.
+#' @param early_stopping_metric Metric monitored for early stopping. Defaults to
+#'     \code{"loss"}.
+#' @param callbacks List of optional callbacks.
+#' @param ... See \code{\link[deepregression]{fit.deepregression}}
+#'
+#' @return See \code{\link[keras]{fit.keras.engine.training.Model}}
+#'
 #' @exportS3Method fit tranchor
 #' @export
 fit.tranchor <- function(

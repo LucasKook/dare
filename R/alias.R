@@ -1,5 +1,12 @@
 
+#' Continuous outcome logistic anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 ColrAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -23,7 +30,14 @@ ColrAN <- function(
 
 }
 
+#' Cox proportional hazards anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 CoxphAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -47,7 +61,14 @@ CoxphAN <- function(
 
 }
 
+#' Reverse-time proportional hazards anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 LehmannAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -71,7 +92,14 @@ LehmannAN <- function(
 
 }
 
+#' Transformed-normal (Box-Cox-type) anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 BoxCoxAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -95,7 +123,14 @@ BoxCoxAN <- function(
 
 }
 
+#' Proportional odds logistic anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 PolrAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -119,7 +154,14 @@ PolrAN <- function(
 
 }
 
+#' Linear anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 LmAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -148,7 +190,14 @@ LmAN <- function(
 
 }
 
+#' Parametric survival anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 SurvregAN <- function(
     formula, data,
     anchor, xi = 0,
@@ -191,7 +240,14 @@ SurvregAN <- function(
 
 }
 
+#' Transformed-count anchor regression
+#'
+#' @inheritParams tranchor
+#' @inheritDotParams tranchor
+#' @return See \code{\link[tranchor]}
+#'
 #' @export
+#'
 cotramAN <- function(
     formula, data,
     anchor, xi = 0,

@@ -1,6 +1,25 @@
 
 #' Distributional anchor regression models
 #'
+#' @param formula Formula for specifying the regression of response on covariates
+#' @param data Data.frame or list containing the variables occuring in \code{formula}
+#'     and \code{anchor}
+#' @param anchor Formula for specifying the anchor. The score residuals are
+#'     projected onto the columns of the design matrix corresponding to
+#'     \code{anchor} and \code{data}
+#' @param xi Controls strength of causal regularization. \code{xi = 0} is the
+#'     unpenalized model.
+#' @param response_type See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param order See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param addconst_interaction See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param latent_distr See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param monitor_metrics See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param trafo_options See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param return_data See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param ... See \code{\link[deeptrafo]{deeptrafo}}.
+#'
+#' @return An untrained model of class \code{"tranchor"}.
+#'
 #' @importFrom mlt R
 #' @importFrom Formula as.Formula
 #' @importFrom stats model.matrix model.response model.frame dbeta as.formula
@@ -162,7 +181,6 @@ tranchor <- function(
 #' @import tfprobability
 #' @import keras
 #' @import tensorflow
-#' @export
 tranchor_loss <- function(base_distribution, prm, xi = 0) {
 
   if (is.character(base_distribution)) {
