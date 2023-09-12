@@ -113,3 +113,9 @@ remotes::install_github("LucasKook/tranchor")
 
 For trouble-shooting `Python`, `tensorflow`, and `tfprobability` installations,
 please see [the `deepregression` documentation](https://github.com/neural-structured-additive-learning/deepregression#troubleshooting).
+
+# References
+
+[1] Kook, L., Sick, B., & Bühlmann, P. (2022). Distributional anchor regression. Statistics and Computing, 32(3), 39.
+
+[2] Rothenhäusler, D., Meinshausen, N., Bühlmann, P., & Peters, J. (2021). Anchor regression: Heterogeneous data meet causality. Journal of the Royal Statistical Society Series B: Statistical Methodology, 83(2), 215-246.
