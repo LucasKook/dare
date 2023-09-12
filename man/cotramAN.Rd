@@ -48,7 +48,7 @@ unpenalized model.}
   }}
 }
 \value{
-See \code{\link[tranchor]}
+See \code{\link[tranchor]{tranchor}}
 }
 \description{
 Transformed-count anchor regression

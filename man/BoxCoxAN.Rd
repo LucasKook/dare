@@ -50,7 +50,7 @@ unpenalized model.}
   }}
 }
 \value{
-See \code{\link[tranchor]}
+See \code{\link[tranchor]{tranchor}}
 }
 \description{
 Transformed-normal (Box-Cox-type) anchor regression

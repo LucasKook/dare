@@ -3,7 +3,7 @@
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -34,7 +34,7 @@ ColrAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -65,7 +65,7 @@ CoxphAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -96,7 +96,7 @@ LehmannAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -127,7 +127,7 @@ BoxCoxAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -158,7 +158,7 @@ PolrAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -194,7 +194,7 @@ LmAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
@@ -244,7 +244,7 @@ SurvregAN <- function(
 #'
 #' @inheritParams tranchor
 #' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]}
+#' @return See \code{\link[tranchor]{tranchor}}
 #'
 #' @export
 #'
