@@ -17,6 +17,8 @@
 #' @param trafo_options See \code{\link[deeptrafo]{deeptrafo}}.
 #' @param return_data See \code{\link[deeptrafo]{deeptrafo}}.
 #' @param ... See \code{\link[deeptrafo]{deeptrafo}}.
+#' @param loss Under development. Please use the default \code{loss = "anchor"}.
+#' @param bw Under development.
 #'
 #' @return An untrained model of class \code{"tranchor"}.
 #'
@@ -31,6 +33,8 @@ tranchor <- function(
     data,
     anchor,
     xi = 0,
+    loss = c("anchor", "indep"),
+    bw = c(1, 1),
     response_type = get_response_type(data[[all.vars(fml)[1]]]),
     order = get_order(response_type, data[[all.vars(fml)[1]]]),
     addconst_interaction = 0,
@@ -140,8 +144,10 @@ tranchor <- function(
   attr(additional_processor, "controls") <- trafo_options
 
   # Loss function
-  # tloss <- get_loss(response_type, latent_distr)
-  tloss <- tranchor_loss(latent_distr, prm, xi)
+  if (loss == "anchor")
+    tloss <- tranchor_loss(latent_distr, prm, xi)
+  else if (loss == "indep")
+    tloss <- indep_loss(latent_distr, Amat, bw[1], bw[2], xi)
 
   snwb <- list(subnetwork_init)[rep(1, length(list_of_formulas))]
   snwb[[which(names(list_of_formulas) == "h1pred")]] <-

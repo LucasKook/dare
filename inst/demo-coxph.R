@@ -19,17 +19,13 @@ test <- GBSG2[GBSG2$age >= quantile(GBSG2$age, probs = 0.5), ]
 
 m <- BoxCoxAN(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 0,
               optimizer = optimizer_adam(0.1))
-fit(m, epochs = 1e4, callbacks = list(
-  callback_reduce_lr_on_plateau("loss", patience = 30),
-  callback_early_stopping("loss", patience = 50)))
+fit(m, epochs = 1e4)
 
 # Anchor ------------------------------------------------------------------
 
 ma <- BoxCoxAN(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 1.5,
                optimizer = optimizer_adam(0.1))
-fit(ma, epochs = 1e4, callbacks = list(
-  callback_reduce_lr_on_plateau("loss", patience = 30),
-  callback_early_stopping("loss", patience = 50)))
+fit(ma, epochs = 1e4)
 
 # Visualize ---------------------------------------------------------------
 

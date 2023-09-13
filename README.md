@@ -33,9 +33,7 @@ regularization parameter `xi = 10`.
 ```r
 m <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 10, 
             optimizer = optimizer_adam(0.1))
-fit(m, epochs = 1e4, callbacks = list(
-  callback_reduce_lr_on_plateau("loss", patience = 30),
-  callback_early_stopping("loss", patience = 50)))
+fit(m, epochs = 1e4)
 unlist(coef(m))
 ###           X (Intercept) 
 ###   -1.309156   -1.294785 
@@ -48,9 +46,7 @@ a better in-sample log-likelihood:
 ```r
 m0 <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 0, 
             optimizer = optimizer_adam(0.1))
-fit(m, epochs = 1e4, callbacks = list(
-  callback_reduce_lr_on_plateau("loss", patience = 30),
-  callback_early_stopping("loss", patience = 50)))
+fit(m, epochs = 1e4)
 unlist(coef(m0))
 ###           X (Intercept) 
 ###   -1.216760   -1.319929 
