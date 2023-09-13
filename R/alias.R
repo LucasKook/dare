@@ -12,19 +12,21 @@ ColrAN <- function(
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
-    addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = order, response_type = response_type),
+    addconst_interaction = 0, latent_distr = "logistic",
+    monitor_metrics = NULL, trafo_options = trafo_control(
+      order_bsp = order, response_type = response_type),
     ...
 ) {
 
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction, latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -43,19 +45,22 @@ CoxphAN <- function(
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
-    addconst_interaction = 0, latent_distr = "gompertz", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = order, response_type = response_type),
+    addconst_interaction = 0, latent_distr = "gompertz",
+    monitor_metrics = NULL, trafo_options = trafo_control(
+      order_bsp = order, response_type = response_type),
     ...
 ) {
 
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction,
+    latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -74,19 +79,22 @@ LehmannAN <- function(
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
-    addconst_interaction = 0, latent_distr = "gumbel", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = order, response_type = response_type),
+    addconst_interaction = 0, latent_distr = "gumbel",
+    monitor_metrics = NULL, trafo_options = trafo_control(
+      order_bsp = order, response_type = response_type),
     ...
 ) {
 
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction,
+    latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -105,19 +113,21 @@ BoxCoxAN <- function(
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
-    addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = order, response_type = response_type),
+    addconst_interaction = 0, latent_distr = "normal",
+    monitor_metrics = NULL, trafo_options = trafo_control(
+      order_bsp = order, response_type = response_type),
     ...
 ) {
 
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction, latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -136,19 +146,21 @@ PolrAN <- function(
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
-    addconst_interaction = 0, latent_distr = "logistic", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = order, response_type = response_type),
+    addconst_interaction = 0, latent_distr = "logistic",
+    monitor_metrics = NULL, trafo_options = trafo_control(
+      order_bsp = order, response_type = response_type),
     ...
 ) {
 
   stopifnot(response_type == "ordered")
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction, latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -168,23 +180,27 @@ LmAN <- function(
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
     order = get_order(response_type, data[[all.vars(formula)[1]]]),
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
-    trafo_options = trafo_control(order_bsp = 1L,
-                                  response_type = response_type,
-                                  y_basis_fun = deeptrafo:::eval_lin,
-                                  y_basis_fun_lower = deeptrafo:::.empty_fun(eval_lin),
-                                  y_basis_fun_prime = deeptrafo:::eval_lin_prime,
-                                  basis = "shiftscale"),
     ...
 ) {
 
   stopifnot(response_type == "continuous")
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  trop <- trafo_control(
+    order_bsp = 1L,
+    response_type = response_type,
+    y_basis_fun = deeptrafo:::eval_lin,
+    y_basis_fun_lower = deeptrafo:::.empty_fun(deeptrafo:::eval_lin),
+    y_basis_fun_prime = deeptrafo:::eval_lin_prime,
+    basis = "shiftscale")
+
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction,
+    latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trop,
+    ... = ...)
 
   ret
 
@@ -229,12 +245,13 @@ SurvregAN <- function(
     basis = "shiftscale"
   )
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction, latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 
@@ -265,15 +282,16 @@ cotramAN <- function(
     response_type = response_type,
     y_basis_fun = deeptrafo:::.get_eval_cotram(order, tsupp),
     y_basis_fun_lower = deeptrafo:::.get_eval_cotram_lower(order, tsupp),
-    y_basis_fun_prime = deeptrafo:::.empty_fun(.get_eval_cotram(order, tsupp))
-  )
+    y_basis_fun_prime = deeptrafo:::.empty_fun(
+      deeptrafo:::.get_eval_cotram(order, tsupp)))
 
-  ret <- tranchor(formula = formula, data = data,
-                  anchor = anchor, xi = xi,
-                  response_type = response_type, order = order,
-                  addconst_interaction = addconst_interaction, latent_distr = latent_distr,
-                  monitor_metrics = monitor_metrics, trafo_options = trafo_options,
-                  ... = ...)
+  ret <- tranchor(
+    formula = formula, data = data,
+    anchor = anchor, xi = xi,
+    response_type = response_type, order = order,
+    addconst_interaction = addconst_interaction, latent_distr = latent_distr,
+    monitor_metrics = monitor_metrics, trafo_options = trafo_options,
+    ... = ...)
 
   ret
 

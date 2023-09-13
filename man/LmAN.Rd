@@ -14,10 +14,6 @@ LmAN(
   addconst_interaction = 0,
   latent_distr = "normal",
   monitor_metrics = NULL,
-  trafo_options = trafo_control(order_bsp = 1L, response_type = response_type,
-    y_basis_fun = deeptrafo:::eval_lin, y_basis_fun_lower =
-    deeptrafo:::.empty_fun(eval_lin), y_basis_fun_prime = deeptrafo:::eval_lin_prime,
-    basis = "shiftscale"),
   ...
 )
 }
@@ -44,11 +40,10 @@ unpenalized model.}
 
 \item{monitor_metrics}{See \code{\link[deeptrafo]{deeptrafo}}.}
 
-\item{trafo_options}{See \code{\link[deeptrafo]{deeptrafo}}.}
-
 \item{...}{
   Arguments passed on to \code{\link[=tranchor]{tranchor}}
   \describe{
+    \item{\code{trafo_options}}{See \code{\link[deeptrafo]{deeptrafo}}.}
     \item{\code{return_data}}{See \code{\link[deeptrafo]{deeptrafo}}.}
     \item{\code{loss}}{Under development. Please use the default \code{loss = "anchor"}.}
     \item{\code{bw}}{Under development.}
