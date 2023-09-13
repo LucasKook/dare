@@ -144,6 +144,7 @@ tranchor <- function(
   attr(additional_processor, "controls") <- trafo_options
 
   # Loss function
+  loss <- match.arg(loss)
   if (loss == "anchor")
     tloss <- tranchor_loss(latent_distr, prm, xi)
   else if (loss == "indep")
