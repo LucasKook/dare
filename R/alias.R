@@ -170,9 +170,9 @@ LmAN <- function(
     addconst_interaction = 0, latent_distr = "normal", monitor_metrics = NULL,
     trafo_options = trafo_control(order_bsp = 1L,
                                   response_type = response_type,
-                                  y_basis_fun = eval_lin,
-                                  y_basis_fun_lower = .empty_fun(eval_lin),
-                                  y_basis_fun_prime = eval_lin_prime,
+                                  y_basis_fun = deeptrafo:::eval_lin,
+                                  y_basis_fun_lower = deeptrafo:::.empty_fun(eval_lin),
+                                  y_basis_fun_prime = deeptrafo:::eval_lin_prime,
                                   basis = "shiftscale"),
     ...
 ) {

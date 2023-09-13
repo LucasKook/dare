@@ -45,6 +45,8 @@ unpenalized model.}
   \describe{
     \item{\code{trafo_options}}{See \code{\link[deeptrafo]{deeptrafo}}.}
     \item{\code{return_data}}{See \code{\link[deeptrafo]{deeptrafo}}.}
+    \item{\code{loss}}{Under development. Please use the default \code{loss = "anchor"}.}
+    \item{\code{bw}}{Under development.}
   }}
 }
 \value{

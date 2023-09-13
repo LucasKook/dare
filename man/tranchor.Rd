@@ -9,6 +9,8 @@ tranchor(
   data,
   anchor,
   xi = 0,
+  loss = c("anchor", "indep"),
+  bw = c(1, 1),
   response_type = get_response_type(data[[all.vars(fml)[1]]]),
   order = get_order(response_type, data[[all.vars(fml)[1]]]),
   addconst_interaction = 0,
@@ -31,6 +33,10 @@ projected onto the columns of the design matrix corresponding to
 
 \item{xi}{Controls strength of causal regularization. \code{xi = 0} is the
 unpenalized model.}
+
+\item{loss}{Under development. Please use the default \code{loss = "anchor"}.}
+
+\item{bw}{Under development.}
 
 \item{response_type}{See \code{\link[deeptrafo]{deeptrafo}}.}
 
