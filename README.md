@@ -79,7 +79,7 @@ logLik(m, newdata = test)
 
 Cross-validation provides one way to choose the strength of regularization
 `xi`. In `tranchor`, cross-validation is implemented as follows: If there is
-a single anchor variable and the variable is a factor, ``leave-one-level-out''
+a single anchor variable and the variable is a factor, "leave-one-level-out"
 cross validation is performed. If the single anchor variable is numeric, it
 is cut into intervals with boundaries given by quantiles. For multivariable
 anchors, the vector of `folds` has to be provided per observation. The code
