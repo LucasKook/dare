@@ -63,3 +63,10 @@ plot(residuals(m, newdata = test), residuals(m0, newdata = test),
      col = cutA)
 legend("bottomright", levels(cutA), lwd = 2, col = 1:length(levels(cutA)),
        title = "A in test data")
+
+# Cross-validation --------------------------------------------------------
+
+cvd <- cv(m, epochs = 1e4, xi = 100)
+sum(cvd$logLiki[, "test"])
+boxplot(cvd$logLiki)
+boxplot(cvd$logLiki[, "test"] ~ cvd$folds)

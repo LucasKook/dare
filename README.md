@@ -5,7 +5,7 @@
 # Distributional anchor regression in R
 
 The `tranchor` package implements distributional anchor regression [1] using a
-stochastic gradient descent optimizer. Anchor regression [2] is a method to
+(stochastic) gradient descent optimizer. Anchor regression [2] is a method to
 robustify predictions under distribution shift induced by so-called anchors.
 A small illustration is given below.
 
@@ -75,6 +75,22 @@ logLik(m0, newdata = test)
 ### [1] -2692.289
 logLik(m, newdata = test)
 ### [1] -2659.036
+```
+
+Cross-validation provides one way to choose the strength of regularization
+`xi`. In `tranchor`, cross-validation is implemented as follows: If there is
+a single anchor variable and the variable is a factor, ``leave-one-level-out''
+cross validation is performed. If the single anchor variable is numeric, it
+is cut into intervals with boundaries given by quantiles. For multivariable
+anchors, the vector of `folds` has to be provided per observation. The code
+below shows how cross-validation can be used in our example above. The output
+of `cv()` contains a matrix `logLiki` of log-likelihood contributions for each 
+fold and the test data.
+
+```r
+cvd <- cv(m, epochs = 1e4, xi = 100)
+-sum(cvd$logLiki[, "test"])
+### [1] -2865.85
 ```
 
 The code for reproducing this example (together with two plots visualizing

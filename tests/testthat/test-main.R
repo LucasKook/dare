@@ -56,3 +56,17 @@ test_that("alias works", {
     # abline(lm(residuals.tranchor(m) ~ A, data = d))
   })
 })
+
+test_that("cv works with all kinds of anchors", {
+  expect_no_error({
+    set.seed(1)
+    d <- simple_dgp(n = tn <- 1e3)
+    m <- ColrAN(Y ~ X, data = d, anchor = ~ A, xi = 1)
+    out <- cv(m, epochs = 1, xi = 0, fold = 2)
+    d$dA <- factor(sample(-3:-1, tn, TRUE))
+    md <- ColrAN(Y ~ X, data = d, anchor = ~ dA, xi = 1)
+    outd <- cv(md, epochs = 1, xi = 0, fold = 2)
+    mv <- ColrAN(Y ~ X, data = d, anchor = ~ A + dA, xi = 1)
+    outv <- cv(mv, epochs = 1, xi = 0, fold = 2)
+  })
+})

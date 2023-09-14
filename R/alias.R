@@ -18,6 +18,7 @@ ColrAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(
@@ -28,6 +29,7 @@ ColrAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -51,6 +53,7 @@ CoxphAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(
@@ -62,6 +65,7 @@ CoxphAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -85,6 +89,7 @@ LehmannAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(
@@ -96,6 +101,7 @@ LehmannAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -119,6 +125,7 @@ BoxCoxAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
   ret <- tranchor(
@@ -129,6 +136,7 @@ BoxCoxAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -152,6 +160,7 @@ PolrAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type == "ordered")
 
   ret <- tranchor(
@@ -162,6 +171,7 @@ PolrAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -183,6 +193,7 @@ LmAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type == "continuous")
 
   trop <- trafo_control(
@@ -202,6 +213,7 @@ LmAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trop,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -224,6 +236,7 @@ SurvregAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
   if (response_type == "survival") {
@@ -253,6 +266,7 @@ SurvregAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }
@@ -274,6 +288,7 @@ cotramAN <- function(
     ...
 ) {
 
+  call <- match.call()
   stopifnot(response_type == "count")
 
   tsupp <- range(data[[all.vars(formula)[1]]])
@@ -293,6 +308,7 @@ cotramAN <- function(
     monitor_metrics = monitor_metrics, trafo_options = trafo_options,
     ... = ...)
 
+  ret$init_params$call <- call
   ret
 
 }

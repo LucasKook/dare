@@ -14,7 +14,7 @@ simple_dgp(n = 100, g = function(x) qchisq(plogis(x), df = 3), shift = 0)
 \item{shift}{shift in the anchor}
 }
 \value{
-data.frame with Y, X, A
+data.frame with Y, X, A, H
 }
 \description{
 Simple data-generating process
