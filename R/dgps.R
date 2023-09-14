@@ -5,7 +5,7 @@
 #' @param g inverse transformation function
 #' @param shift shift in the anchor
 #'
-#' @return data.frame with Y, X, A
+#' @return data.frame with Y, X, A, H
 #'
 #' @importFrom stats plogis qchisq rlogis rnorm
 #' @export
@@ -15,5 +15,5 @@ simple_dgp <- function(n = 100, g = \(x) qchisq(plogis(x), df = 3), shift = 0) {
   H <- A + rnorm(n)
   X <- H + A + rnorm(n)
   Y <- g(H + X + A + rlogis(n))
-  return(data.frame(Y = Y, X = X, A = A))
+  data.frame(Y = Y, X = X, A = A, H = H)
 }
