@@ -1,7 +1,7 @@
 
 #' Cross-validating distributional anchor regression models
 #'
-#' @param object Object of class \code{"tranchor"}.
+#' @param x Object of class \code{"tranchor"}.
 #' @param epochs Number of epochs.
 #' @param folds Optional vector of length <number of samples> specifying the
 #'     folds.
@@ -9,7 +9,7 @@
 #'     anchors. See details.
 #' @param ... Arguments passed to \code{\link[tranchor]{fit.tranchor}}.
 #' @param xi Optional; can be used to overwrite \code{xi} used when building
-#'     \code{object}.
+#'     \code{x}.
 #' @param verbose Whether to show a progress bar; defaults to \code{TRUE}.
 #' @param print_training_info Whether to show the training steps in each fold;
 #'     defaults to \code{FALSE}.
@@ -19,9 +19,9 @@
 #'
 #' @exportS3Method cv tranchor
 #'
-cv.tranchor <- function(object, epochs, xi = NULL, folds = NULL, fold = 5,
+cv.tranchor <- function(x, epochs, xi = NULL, folds = NULL, fold = 5,
                         verbose = TRUE, print_training_info = FALSE, ...) {
-  call <- object$init_params$call
+  call <- x$init_params$call
   data <- eval(call$data, envir = parent.frame())
   anchor <- eval(call$anchor, envir = parent.frame())
   if (!is.null(call$optimizer))
@@ -35,13 +35,13 @@ cv.tranchor <- function(object, epochs, xi = NULL, folds = NULL, fold = 5,
   out <- matrix(nrow = nrow(data), ncol = fold + 1)
   colnames(out) <- c(paste0("fold", afolds), "test")
   if (verbose && interactive())
-    pb <- txtProgressBar(max = fold, style = 3)
+    pb <- utils::txtProgressBar(max = fold, style = 3)
   for (tfold in afolds) {
-    if (!is.null(object$init_params$call$optimizer))
-      call$optimizer <- eval(object$init_params$call$optimizer,
+    if (!is.null(x$init_params$call$optimizer))
+      call$optimizer <- eval(x$init_params$call$optimizer,
                              envir = parent.frame())
     if (verbose && interactive())
-      setTxtProgressBar(pb, tfold)
+      utils::setTxtProgressBar(pb, tfold)
     tridx <- which(folds != tfold)
     teidx <- which(folds == tfold)
     train <- data[tridx, ]
@@ -60,11 +60,11 @@ cv.tranchor <- function(object, epochs, xi = NULL, folds = NULL, fold = 5,
   A <- .rm_int(model.matrix(anchor, data))
   if (ncol(A) == 1L) {
     if (length(unique(A)) > fold)
-      folds <- cut(A, breaks = quantile(A, probs = (0:fold)/fold),
+      folds <- cut(A, breaks = stats::quantile(A, probs = (0:fold)/fold),
                    include.lowest = TRUE)
     else folds <- factor(A)
   } else {
-    folds <- as.factor(cutree(hclust(dist(A)), k = fold))
+    folds <- as.factor(stats::cutree(stats::hclust(stats::dist(A)), k = fold))
   }
   as.numeric(folds)
 }

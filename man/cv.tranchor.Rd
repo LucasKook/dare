@@ -5,7 +5,7 @@
 \title{Cross-validating distributional anchor regression models}
 \usage{
 \method{cv}{tranchor}(
-  object,
+  x,
   epochs,
   xi = NULL,
   folds = NULL,
@@ -16,12 +16,12 @@
 )
 }
 \arguments{
-\item{object}{Object of class \code{"tranchor"}.}
+\item{x}{Object of class \code{"tranchor"}.}
 
 \item{epochs}{Number of epochs.}
 
 \item{xi}{Optional; can be used to overwrite \code{xi} used when building
-\code{object}.}
+\code{x}.}
 
 \item{folds}{Optional vector of length <number of samples> specifying the
 folds.}
