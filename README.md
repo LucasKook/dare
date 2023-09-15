@@ -11,8 +11,9 @@ A small illustration is given below.
 
 # Using package `dare`
 
-Consider the following data generated from a structural causal model:
-
+Consider the following data generated from a structural causal model in which
+`A` is the anchor, `X` a predictor, `H` a hidden confounder, and `Y` the 
+response:
 ```r
 set.seed(42)
 n <- 1e3
@@ -24,12 +25,8 @@ train <- data.frame(Y = Y, X = X, A = A)
 ```
 
 Conditional on `H + X + A = 0`, this generates responses with a Chi-square
-distribution with three degrees of freedom. In this example, we treat `H` as
-hidden.
-
-We set up and fit continuous outcome logistic anchor regression below with
-regularization parameter `xi = 10`.
-
+distribution with three degrees of freedom. We set up and fit continuous outcome
+logistic anchor regression below with regularization parameter `xi = 10`:
 ```r
 m <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 10, 
             optimizer = optimizer_adam(0.1))
@@ -45,7 +42,7 @@ The unpenalized model (`xi = 0`) yields different coefficient estimates and
 a better in-sample log-likelihood:
 ```r
 m0 <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 0, 
-            optimizer = optimizer_adam(0.1))
+             optimizer = optimizer_adam(0.1))
 fit(m, epochs = 1e4)
 unlist(coef(m0))
 ###           X (Intercept) 
@@ -56,8 +53,7 @@ logLik(m0)
 
 We now generate some test data from a different environment, in which the
 distribution of `A` is shifted, which in turn induces distribution shift in the
-other covariates.
-
+other covariates:
 ```r
 A <- 1 + rnorm(n)
 H <- A + rnorm(n)
@@ -68,8 +64,7 @@ test <- data.frame(Y = Y, X = X, A = A)
 
 Below we show the performance on the shifted out-of-sample data. De-correlating
 the score residuals from the anchors (induced by causal regularization) leads
-to a better out-of-sample log-likelihood on shifted data.
-
+to a better out-of-sample log-likelihood on shifted data;
 ```r
 logLik(m0, newdata = test)
 ### [1] -2692.289
@@ -83,15 +78,14 @@ a single anchor variable and the variable is a factor, "leave-one-level-out"
 cross validation is performed. If the single anchor variable is numeric, it
 is cut into intervals with boundaries given by quantiles. For multivariable
 anchors, the vector of `folds` has to be provided per observation. The code
-below shows how cross-validation can be used in our example above. The output
-of `cv()` contains a matrix `logLiki` of log-likelihood contributions for each 
-fold and the test data.
-
+below shows how cross-validation can be used in our example above:
 ```r
 cvd <- cv(m, epochs = 1e4, xi = 100)
 -sum(cvd$logLiki[, "test"])
 ### [1] -2865.85
 ```
+The output of `cv()` contains a matrix `logLiki` of log-likelihood contributions 
+for each fold and the test data.
 
 The code for reproducing this example (together with two plots visualizing
 out-of-sample log-likelihood contributions and score residuals for the two
@@ -103,7 +97,7 @@ proportional hazard anchor regression can be found in `./inst/demo-coxph.R`.
 For general outcome types and error distributions, the `dare()` function
 can be used. However, for archetypal model classes we provide the following
 alias (using the name of function corresponding to a model class and appending
-`DA` for anchor regression):
+`DA` for "Distributional Anchor"):
 
 | **Function alias**  | **Corresponding model**    |
 |---------------------|----------------------------|
