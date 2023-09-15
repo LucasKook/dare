@@ -4,7 +4,12 @@
 \alias{simple_dgp}
 \title{Simple data-generating process}
 \usage{
-simple_dgp(n = 100, g = function(x) qchisq(plogis(x), df = 3), shift = 0)
+simple_dgp(
+  n = 100,
+  g = function(x) qchisq(plogis(x), df = 3),
+  shift = 0,
+  iv = FALSE
+)
 }
 \arguments{
 \item{n}{sample size}
@@ -12,6 +17,8 @@ simple_dgp(n = 100, g = function(x) qchisq(plogis(x), df = 3), shift = 0)
 \item{g}{inverse transformation function}
 
 \item{shift}{shift in the anchor}
+
+\item{iv}{whether the graphical iv assumptions should be met}
 }
 \value{
 data.frame with Y, X, A, H

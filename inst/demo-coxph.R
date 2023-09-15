@@ -3,7 +3,7 @@
 
 # Dependencies ------------------------------------------------------------
 
-library("tranchor")
+library("dare")
 library("tram")
 library("survival")
 
@@ -17,13 +17,13 @@ test <- GBSG2[GBSG2$age >= quantile(GBSG2$age, probs = 0.5), ]
 
 # Unpenalized Coxph -------------------------------------------------------
 
-m <- BoxCoxAN(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 0,
+m <- BoxCoxDA(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 0,
               optimizer = optimizer_adam(0.1))
 fit(m, epochs = 1e4)
 
 # Anchor ------------------------------------------------------------------
 
-ma <- BoxCoxAN(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 1.5,
+ma <- BoxCoxDA(surv ~ horTh + pnodes, data = train, anchor = ~ age, xi = 1.5,
                optimizer = optimizer_adam(0.1))
 fit(ma, epochs = 1e4)
 

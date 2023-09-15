@@ -15,7 +15,7 @@ train <- data.frame(Y = Y, X = X, A = A)
 
 # Penalized model ---------------------------------------------------------
 
-m <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 10,
+m <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 10,
             optimizer = optimizer_adam(0.1))
 fit(m, epochs = 1e4)
 unlist(coef(m))
@@ -26,7 +26,7 @@ logLik(m)
 
 # Unpenalized model -------------------------------------------------------
 
-m0 <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 0,
+m0 <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 0,
              optimizer = optimizer_adam(0.1))
 fit(m0, epochs = 1e4)
 unlist(coef(m0))

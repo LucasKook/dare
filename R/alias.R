@@ -1,13 +1,13 @@
 
 #' Continuous outcome logistic anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-ColrAN <- function(
+ColrDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -21,7 +21,7 @@ ColrAN <- function(
   call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -36,13 +36,13 @@ ColrAN <- function(
 
 #' Cox proportional hazards anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-CoxphAN <- function(
+CoxphDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -56,7 +56,7 @@ CoxphAN <- function(
   call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -72,13 +72,13 @@ CoxphAN <- function(
 
 #' Reverse-time proportional hazards anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-LehmannAN <- function(
+LehmannDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -92,7 +92,7 @@ LehmannAN <- function(
   call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -108,13 +108,13 @@ LehmannAN <- function(
 
 #' Transformed-normal (Box-Cox-type) anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-BoxCoxAN <- function(
+BoxCoxDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -128,7 +128,7 @@ BoxCoxAN <- function(
   call <- match.call()
   stopifnot(response_type %in% c("continuous", "survival"))
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -143,13 +143,13 @@ BoxCoxAN <- function(
 
 #' Proportional odds logistic anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-PolrAN <- function(
+PolrDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -163,7 +163,7 @@ PolrAN <- function(
   call <- match.call()
   stopifnot(response_type == "ordered")
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -178,13 +178,13 @@ PolrAN <- function(
 
 #' Linear anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-LmAN <- function(
+LmDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -204,7 +204,7 @@ LmAN <- function(
     y_basis_fun_prime = deeptrafo:::eval_lin_prime,
     basis = "shiftscale")
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -220,13 +220,13 @@ LmAN <- function(
 
 #' Parametric survival anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-SurvregAN <- function(
+SurvregDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -258,7 +258,7 @@ SurvregAN <- function(
     basis = "shiftscale"
   )
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,
@@ -273,13 +273,13 @@ SurvregAN <- function(
 
 #' Transformed-count anchor regression
 #'
-#' @inheritParams tranchor
-#' @inheritDotParams tranchor
-#' @return See \code{\link[tranchor]{tranchor}}
+#' @inheritParams dare
+#' @inheritDotParams dare
+#' @return See \code{\link[dare]{dare}}
 #'
 #' @export
 #'
-cotramAN <- function(
+cotramDA <- function(
     formula, data,
     anchor, xi = 0,
     response_type = get_response_type(data[[all.vars(formula)[1]]]),
@@ -300,7 +300,7 @@ cotramAN <- function(
     y_basis_fun_prime = deeptrafo:::.empty_fun(
       deeptrafo:::.get_eval_cotram(order, tsupp)))
 
-  ret <- tranchor(
+  ret <- dare(
     formula = formula, data = data,
     anchor = anchor, xi = xi,
     response_type = response_type, order = order,

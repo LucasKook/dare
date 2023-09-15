@@ -1,15 +1,15 @@
 <!-- badges: start -->
-  [![R-CMD-check](https://github.com/LucasKook/tranchor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LucasKook/tranchor/actions/workflows/R-CMD-check.yaml)
+  [![R-CMD-check](https://github.com/LucasKook/dare/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LucasKook/dare/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # Distributional anchor regression in R
 
-The `tranchor` package implements distributional anchor regression [1] using a
+The `dare` package implements distributional anchor regression [1] using a
 (stochastic) gradient descent optimizer. Anchor regression [2] is a method to
 robustify predictions under distribution shift induced by so-called anchors.
 A small illustration is given below.
 
-# Using package `tranchor`
+# Using package `dare`
 
 Consider the following data generated from a structural causal model:
 
@@ -31,7 +31,7 @@ We set up and fit continuous outcome logistic anchor regression below with
 regularization parameter `xi = 10`.
 
 ```r
-m <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 10, 
+m <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 10, 
             optimizer = optimizer_adam(0.1))
 fit(m, epochs = 1e4)
 unlist(coef(m))
@@ -44,7 +44,7 @@ logLik(m)
 The unpenalized model (`xi = 0`) yields different coefficient estimates and
 a better in-sample log-likelihood:
 ```r
-m0 <- ColrAN(Y ~ X, data = train, anchor = ~ A, xi = 0, 
+m0 <- ColrDA(Y ~ X, data = train, anchor = ~ A, xi = 0, 
             optimizer = optimizer_adam(0.1))
 fit(m, epochs = 1e4)
 unlist(coef(m0))
@@ -78,7 +78,7 @@ logLik(m, newdata = test)
 ```
 
 Cross-validation provides one way to choose the strength of regularization
-`xi`. In `tranchor`, cross-validation is implemented as follows: If there is
+`xi`. In `dare`, cross-validation is implemented as follows: If there is
 a single anchor variable and the variable is a factor, "leave-one-level-out"
 cross validation is performed. If the single anchor variable is numeric, it
 is cut into intervals with boundaries given by quantiles. For multivariable
@@ -100,27 +100,27 @@ proportional hazard anchor regression can be found in `./inst/demo-coxph.R`.
 
 # Implemented model classes
 
-For general outcome types and error distributions, the `tranchor()` function
+For general outcome types and error distributions, the `dare()` function
 can be used. However, for archetypal model classes we provide the following
 alias (using the name of function corresponding to a model class and appending
-`AN` for anchor regression):
+`DA` for anchor regression):
 
 | **Function alias**  | **Corresponding model**    |
 |---------------------|----------------------------|
-| `BoxCoxAN()`        | `tram::BoxCox()`           | 
-| `ColrAN()`          | `tram::Colr()`             |
-| `cotramAN()`        | `cotram::cotram()`         |
-| `CoxphAN()`         | `tram::Coxph()`            |
-| `LehmannAN()`       | `tram::Lehmann()`          |
-| `LmAN()`            | `tram::Lm()`               |
-| `PolrAN()`          | `tram::Polr()`             |
-| `SurvregAN()`       | `tram::Survreg()`          |
+| `BoxCoxDA()`        | `tram::BoxCox()`           | 
+| `ColrDA()`          | `tram::Colr()`             |
+| `cotramDA()`        | `cotram::cotram()`         |
+| `CoxphDA()`         | `tram::Coxph()`            |
+| `LehmannDA()`       | `tram::Lehmann()`          |
+| `LmDA()`            | `tram::Lm()`               |
+| `PolrDA()`          | `tram::Polr()`             |
+| `SurvregDA()`       | `tram::Survreg()`          |
 
-# Installing package `tranchor`
+# Installing package `dare`
 
 The package can be installed via:
 ```r
-remotes::install_github("LucasKook/tranchor")
+remotes::install_github("LucasKook/dare")
 ```
 
 For trouble-shooting `Python`, `tensorflow`, and `tfprobability` installations,

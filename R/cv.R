@@ -1,13 +1,13 @@
 
 #' Cross-validating distributional anchor regression models
 #'
-#' @param x Object of class \code{"tranchor"}.
+#' @param x Object of class \code{"dare"}.
 #' @param epochs Number of epochs.
 #' @param folds Optional vector of length <number of samples> specifying the
 #'     folds.
 #' @param fold If \code{folds} is not specified, folds are computed from the
 #'     anchors. See details.
-#' @param ... Arguments passed to \code{\link[tranchor]{fit.tranchor}}.
+#' @param ... Arguments passed to \code{\link[dare]{fit.dare}}.
 #' @param xi Optional; can be used to overwrite \code{xi} used when building
 #'     \code{x}.
 #' @param verbose Whether to show a progress bar; defaults to \code{TRUE}.
@@ -17,9 +17,9 @@
 #' @return List of negative log-likelihood contributions in- and out-of-sample,
 #'     \code{folds} and \code{fold}.
 #'
-#' @exportS3Method cv tranchor
+#' @exportS3Method cv dare
 #'
-cv.tranchor <- function(x, epochs, xi = NULL, folds = NULL, fold = 5,
+cv.dare <- function(x, epochs, xi = NULL, folds = NULL, fold = 5,
                         verbose = TRUE, print_training_info = FALSE, ...) {
   call <- x$init_params$call
   data <- eval(call$data, envir = parent.frame())
@@ -53,7 +53,7 @@ cv.tranchor <- function(x, epochs, xi = NULL, folds = NULL, fold = 5,
     out[teidx, fold + 1] <- logLik(m, newdata = test, convert_fun = \(x) -x)
   }
 
-  structure(list(logLiki = out, folds = folds, fold = fold), class = "cvAN")
+  structure(list(logLiki = out, folds = folds, fold = fold), class = "cvDA")
 }
 
 .compute_folds <- function(anchor, data, fold) {

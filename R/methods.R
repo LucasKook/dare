@@ -1,15 +1,15 @@
 
 #' Log-likelihood for in- and out-of-sample model evaluation
 #'
-#' @exportS3Method logLik tranchor
+#' @exportS3Method logLik dare
 #'
-#' @param object Object of class \code{"tranchor"}
+#' @param object Object of class \code{"dare"}
 #' @param newdata Data.frame or list for evaluating on new data.
 #' @param convert_fun See \code{\link[deeptrafo]{logLik.deeptrafo}}.
 #' @param ... See \code{\link[deeptrafo]{logLik.deeptrafo}}.
 #'
 #' @export
-logLik.tranchor <- function(
+logLik.dare <- function(
     object,
     newdata = NULL,
     convert_fun = function(x, ...) - sum(x, ...),
@@ -79,16 +79,16 @@ logLik.tranchor <- function(
 
 #' Residuals for in- and out-of-sample model evaluation
 #'
-#' @param object Object of class \code{"tranchor"}
+#' @param object Object of class \code{"dare"}
 #' @param newdata Optional data.frame or list of new data to compute residuals on
 #' @param convert_fun See \code{\link[deeptrafo]{coef.deeptrafo}}
 #' @param ... See \code{\link[deeptrafo]{coef.deeptrafo}}
 #'
 #' @return Single-column matrix of score residuals
 #'
-#' @exportS3Method residuals tranchor
+#' @exportS3Method residuals dare
 #' @export
-residuals.tranchor <- function(
+residuals.dare <- function(
     object,
     newdata = NULL,
     convert_fun = function(x, ...) - identity(x),
@@ -119,7 +119,7 @@ residuals.tranchor <- function(
 
 #' Fit distributional anchor regression models
 #'
-#' @param object Object of class \code{"tranchor"}.
+#' @param object Object of class \code{"dare"}.
 #' @param epochs Number of epochs to train the model.
 #' @param early_stopping_metric Metric monitored for early stopping. Defaults to
 #'     \code{"loss"}.
@@ -128,9 +128,9 @@ residuals.tranchor <- function(
 #'
 #' @return See \code{\link[keras]{fit.keras.engine.training.Model}}
 #'
-#' @exportS3Method fit tranchor
+#' @exportS3Method fit dare
 #' @export
-fit.tranchor <- function(
+fit.dare <- function(
     object,
     epochs = 10,
     early_stopping_metric = "loss",

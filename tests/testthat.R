@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(tranchor)
+library(dare)
 
-test_check("tranchor")
+test_check("dare")

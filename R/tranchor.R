@@ -20,7 +20,7 @@
 #' @param loss Under development. Please use the default \code{loss = "anchor"}.
 #' @param bw Under development.
 #'
-#' @return An untrained model of class \code{"tranchor"}.
+#' @return An untrained model of class \code{"dare"}.
 #'
 #' @importFrom mlt R
 #' @importFrom Formula as.Formula
@@ -28,7 +28,7 @@
 #'     fitted formula predict rmultinom logLik terms drop.terms
 #' @importFrom keras layer_dense layer_add layer_concatenate
 #' @export
-tranchor <- function(
+dare <- function(
     formula,
     data,
     anchor,
@@ -146,7 +146,7 @@ tranchor <- function(
   # Loss function
   loss <- match.arg(loss)
   if (loss == "anchor")
-    tloss <- tranchor_loss(latent_distr, prm, xi)
+    tloss <- dare_loss(latent_distr, prm, xi)
   else if (loss == "indep")
     tloss <- indep_loss(latent_distr, Amat, bw[1], bw[2], xi)
 
@@ -178,7 +178,7 @@ tranchor <- function(
   ret$init_params$latent_distr <- latent_distr
   ret$init_params$call <- call
 
-  class(ret) <- c("tranchor", "deeptrafo", "deepregression")
+  class(ret) <- c("dare", "deeptrafo", "deepregression")
   ret
 
 }
@@ -188,7 +188,7 @@ tranchor <- function(
 #' @import tfprobability
 #' @import keras
 #' @import tensorflow
-tranchor_loss <- function(base_distribution, prm, xi = 0) {
+dare_loss <- function(base_distribution, prm, xi = 0) {
 
   if (is.character(base_distribution)) {
     bd <- deeptrafo:::get_bd(base_distribution)
