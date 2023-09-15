@@ -57,15 +57,14 @@ cv.tranchor <- function(x, epochs, xi = NULL, folds = NULL, fold = 5,
 }
 
 .compute_folds <- function(anchor, data, fold) {
-  A <- .rm_int(model.matrix(anchor, data))
-  if (ncol(A) == 1L) {
-    if (length(unique(A)) > fold)
-      folds <- cut(A, breaks = stats::quantile(A, probs = (0:fold)/fold),
-                   include.lowest = TRUE)
-    else folds <- factor(A)
-  } else {
-    folds <- as.factor(stats::cutree(stats::hclust(stats::dist(A)), k = fold))
-  }
+  A <- as.data.frame(.rm_int(model.matrix(anchor, data)))
+  nA <- lapply(A, \(tcol) {
+    if (length(unique(tcol)) > fold)
+      factor(cut(tcol, breaks = stats::quantile(tcol, probs = (0:fold)/fold),
+                 include.lowest = TRUE))
+    else factor(tcol)
+  })
+  folds <- droplevels(interaction(nA))
   as.numeric(folds)
 }
 
