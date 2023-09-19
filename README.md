@@ -117,10 +117,15 @@ The package can be installed via:
 remotes::install_github("LucasKook/dare")
 ```
 
-The implementation is build upon package `deeptrafo` [3] which is available on
-[CRAN](https://CRAN.R-project.org/package=deeptrafo). For trouble-shooting
-`Python`, `tensorflow`, and `tfprobability` installations, please see
-[the `deepregression` documentation](https://github.com/neural-structured-additive-learning/deepregression#troubleshooting).
+The implementation is build upon package `deeptrafo` [3] and `deepregression`
+[4]. Please install the latest development version from GitHub via:
+```r
+remotes::install_github("neural-structured-additive-learning/deepregression")
+remotes::install_github("neural-structured-additive-learning/deeptrafo")
+```
+For trouble-shooting `Python`, `tensorflow`, and `tfprobability` installations,
+please see [the `deepregression`
+documentation](https://github.com/neural-structured-additive-learning/deepregression#troubleshooting).
 
 # References
 
@@ -128,5 +133,7 @@ The implementation is build upon package `deeptrafo` [3] which is available on
 
 [2] Rothenhäusler, D., Meinshausen, N., Bühlmann, P., & Peters, J. (2021). Anchor regression: Heterogeneous data meet causality. Journal of the Royal Statistical Society Series B: Statistical Methodology, 83(2), 215-246. [doi:10.1111/rssb.12398](https://doi.org/10.1111/rssb.12398).
 
-[3] Kook, L., Baumann, P. F., Dürr, O., Sick, B., & Rügamer, D. (2022). Estimating Conditional Distributions with Neural Networks using R package deeptrafo. arXiv preprint arXiv:2211.13665.
+[3] Kook, L., Baumann, P. F., Dürr, O., Sick, B., & Rügamer, D. (2022). Estimating Conditional Distributions with Neural Networks using R package `deeptrafo`. arXiv preprint arXiv:2211.13665.
 [doi:10.48550/arXiv.2211.13665](https://doi.org/10.48550/arXiv.2211.13665)
+
+[4] Rügamer, D., Kolb, C., Fritz, C., Pfisterer, F., Kopper, P., Bischl, B., Shen, R., Bukas, C., Barros de Andrade e Sousa, L., Thalmeier, D., Baumann, P. F. M., Kook, L., Klein, N., & Müller, C. L. (2023). `deepregression`: A Flexible Neural Network Framework for Semi-Structured Deep Distributional Regression. Journal of Statistical Software, 105(2), 1-31. [doi:10.18637/jss.v105.i02](https://doi.org/10.18637/jss.v105.i02)
