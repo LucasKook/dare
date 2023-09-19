@@ -162,7 +162,7 @@ dare <- function(
     y = y, family = latent_distr, data = data, list_of_formulas = list_of_formulas,
     subnetwork_builder = snwb, from_preds_to_output = from_pred_to_trafo_fun,
     loss = tloss, monitor_metrics = monitor_metrics,
-    additional_processor = additional_processor), dots)
+    additional_processor = additional_processor, engine = "tf"), dots)
 
   ret <- suppressWarnings(do.call("deepregression", args))
 
