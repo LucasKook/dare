@@ -67,11 +67,16 @@ indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
       m <- Amat$shape[[1]]
       H <- tf$eye(m) - 1/m * tf$ones(c(m, m))
       K <- k_normal(Amat, kx)
-      L <- k_normal(scores, ky)
+      # L <- k_normal(scores, ky)
+      L <- k_normal(tfd_cdf(bd, trafo), ky)
       pen <- tf$linalg$diag_part(tf$matmul(L, tf$matmul(H, tf$matmul(K, H)))) / (m - 1)
 
-      # return(pen) # test xi = Inf
-      return(layer_add(list(neglogLik, xi * pen)))
+      smpl <- k_flatten(tfd_cdf(bd, trafo))
+      ecdf <- tfp$distributions$Empirical(smpl)
+      unif <- (tfd_cdf(ecdf, smpl) - smpl)^2
+
+      return(layer_add(list(pen, unif))) # test xi = Inf
+      # return(layer_add(list(neglogLik, xi * unif, xi * pen)))
     }
   )
 }
