@@ -76,7 +76,7 @@ indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
       ecdf <- tfp$distributions$Empirical(smpl)
       unif <- (tfd_cdf(ecdf, smpl) - smpl)^2
 
-      k_max(c(k_sum(pen), k_sum(unif)))
+      k_max(c(xi * k_sum(pen), k_sum(unif)))
 
       # return(layer_add(list(xi * pen, (1 - xi) * unif))) # test xi = Inf
       # return(layer_add(list(neglogLik, xi * unif, xi * pen)))
