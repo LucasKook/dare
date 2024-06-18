@@ -135,7 +135,7 @@ fit.dare <- function(
     epochs = 10,
     early_stopping_metric = "loss",
     callbacks = list(
-  callback_reduce_lr_on_plateau("loss", patience = 30),
+  callback_reduce_lr_on_plateau("loss", patience = 30, factor = 0.5),
   callback_early_stopping("loss", patience = 50)),
     ...
 ){
