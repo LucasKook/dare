@@ -73,10 +73,11 @@ indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
       pen <- tf$linalg$diag_part(tf$matmul(L, tf$matmul(H, tf$matmul(K, H)))) / (m - 1)
 
       smpl <- k_flatten(tfd_cdf(bd, trafo))
-      ecdf <- tfp$distributions$Empirical(smpl)
-      unif <- (tfd_cdf(ecdf, smpl) - smpl)^2
+      # ecdf <- tfp$distributions$Empirical(smpl)
+      # unif <- (tfd_cdf(ecdf, smpl) - smpl)^2
+      unif <- (((1:m) - 0.5) / m - tf$sort(smpl))^2
 
-      k_sum(c(xi * k_sum(pen), k_sum(unif)))
+      k_sum(c(xi * k_sum(pen), 1/(12 * m^2) + k_mean(unif)))
 
       # return(layer_add(list(xi * pen, (1 - xi) * unif))) # test xi = Inf
       # return(layer_add(list(neglogLik, xi * unif, xi * pen)))
