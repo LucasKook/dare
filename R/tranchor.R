@@ -43,6 +43,7 @@ dare <- function(
     trafo_options = trafo_control(
       order_bsp = order, response_type = response_type),
     return_data = FALSE,
+    aggr = k_sum,
     ...
 )
 {
@@ -148,7 +149,7 @@ dare <- function(
   if (loss == "anchor")
     tloss <- dare_loss(latent_distr, prm, xi)
   else if (loss == "indep")
-    tloss <- indep_loss(latent_distr, Amat, bw[1], bw[2], xi)
+    tloss <- indep_loss(latent_distr, Amat, bw[1], bw[2], xi, aggr = aggr)
 
   snwb <- list(subnetwork_init)[rep(1, length(list_of_formulas))]
   snwb[[which(names(list_of_formulas) == "h1pred")]] <-

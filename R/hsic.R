@@ -14,7 +14,7 @@ k_normal <- function(X, bw = 1) {
   tf$exp(- D2 / (2 * bw^2))
 }
 
-indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
+indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0, aggr = k_sum) {
 
   if (is.character(base_distribution)) {
     bd <- deeptrafo:::get_bd(base_distribution)
@@ -26,6 +26,7 @@ indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
   xi <- keras::k_constant(xi)
   kx <- k_constant(kx)
   ky <- k_constant(ky)
+  aggr <- match.fun(aggr)
 
   return(
     function(y_true, y_pred) {
@@ -77,7 +78,7 @@ indep_loss <- function(base_distribution, Amat, kx, ky, xi = 0) {
       # unif <- (tfd_cdf(ecdf, smpl) - smpl)^2
       unif <- (((1:m) - 0.5) / m - tf$sort(smpl))^2
 
-      k_sum(c(xi * k_sum(pen), 1/(12 * m^2) + k_mean(unif)))
+      aggr(c(xi * k_sum(pen), 1/(12 * m^2) + k_mean(unif)))
 
       # return(layer_add(list(xi * pen, (1 - xi) * unif))) # test xi = Inf
       # return(layer_add(list(neglogLik, xi * unif, xi * pen)))
